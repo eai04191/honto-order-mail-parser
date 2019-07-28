@@ -81,6 +81,9 @@ router.post("/parse", function(req, res) {
         kResult.books.forEach(undefinableBook => {
             const book: Book = Object.assign({}, blankBook, undefinableBook);
             if (book.link !== "") {
+                book.author = book.author.replace(/^著者:/, "");
+                book.author = book.author.replace(/（著者）$/, "");
+
                 const [, id] = book.link.match(/pd_(\d+).html/);
                 const images = createHontoThumbnails(id);
                 const bookWithImageLinks = Object.assign({}, book, { images });
