@@ -21,7 +21,7 @@
         "@types/helmet": "^0.0.48",
         "express-list-endpoints": "^5.0.0",
         "nodemon": "^2.0.4",
-        "ts-node": "^8.10.2",
+        "ts-node": "^9.0.0",
         "typescript": "^4.0.2"
     }
 }
