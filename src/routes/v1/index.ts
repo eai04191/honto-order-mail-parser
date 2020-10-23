@@ -77,22 +77,34 @@ router.post("/parse", function (req, res) {
 
     const kResult = kirinuki(schema, req.body.html);
 
-    if (kResult.books instanceof Array) {
+    if (!(kResult.books instanceof Array)) {
+        res.status(500).json({
+            message: "parse error",
+        });
+        return;
+    }
+
+    try {
         kResult.books.forEach((undefinableBook) => {
             const book: Book = Object.assign({}, blankBook, undefinableBook);
             if (book.link !== "") {
                 book.author = book.author.replace(/^著者:/, "");
                 book.author = book.author.replace(/（著者）$/, "");
 
-                const [, id] = book.link.match(/pd_(\d+).html/);
+                const id = book.link.match(/pd(-set)?_(?<id>\d+).html/)?.groups
+                    ?.id;
+                if (id === undefined) {
+                    throw new Error("Could not get id.");
+                }
+
                 const images = createHontoThumbnails(id);
                 const bookWithImageLinks = Object.assign({}, book, { images });
                 returnArr.push(bookWithImageLinks);
             }
         });
-    } else {
+    } catch (error) {
         res.status(500).json({
-            message: "parse error",
+            message: `parse error (${error.message})`,
         });
         return;
     }
