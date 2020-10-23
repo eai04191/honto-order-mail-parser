@@ -74,7 +74,7 @@ router.post("/parse", function(req, res) {
     }
 
     const returnArr: any = [];
-
+    console.log(req.body.html);
     const kResult = kirinuki(schema, req.body.html);
 
     if (kResult.books instanceof Array) {
