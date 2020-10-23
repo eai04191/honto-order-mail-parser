@@ -93,7 +93,7 @@ router.post("/parse", function (req, res) {
 
                 const id = book.link.match(/pd(-set)?_(?<id>\d+).html/)?.groups
                     ?.id;
-                if (id === undefined) {
+                if (typeof id === "undefined") {
                     throw new Error("Could not get id.");
                 }
 
