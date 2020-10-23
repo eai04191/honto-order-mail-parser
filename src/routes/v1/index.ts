@@ -8,14 +8,14 @@ const schema: ISchema = {
         _unfold: true,
         title: [
             ".content > tbody > tr:nth-of-type(1) .content tr:nth-of-type(2) a",
-            "text"
+            "text",
         ],
         link:
             ".content > tbody > tr:nth-of-type(1) .content tr:nth-of-type(2) a",
         author:
             ".content > tbody > tr:nth-of-type(1) .content tr:nth-of-type(3) p",
-        price: ".content > tbody > tr:nth-of-type(2) .td-pd10 p span"
-    }
+        price: ".content > tbody > tr:nth-of-type(2) .td-pd10 p span",
+    },
 };
 
 interface Book {
@@ -38,7 +38,7 @@ const blankBook: Book = {
     title: "",
     link: "",
     author: "",
-    price: ""
+    price: "",
 };
 
 function createHontoThumbnails(id: string): imageLinks {
@@ -61,14 +61,14 @@ function createHontoThumbnails(id: string): imageLinks {
         133: create(133, id, 1, "BL", "png"),
         90: create(90, id, 1, "none", "jpg"),
         81: create(81, id, 1, "BC", "png"),
-        75: create(75, id, 1, "CC", "png")
+        75: create(75, id, 1, "CC", "png"),
     };
 }
 
-router.post("/parse", function(req, res) {
+router.post("/parse", function (req, res) {
     if (!req.body.html) {
         res.status(500).json({
-            message: "missing parameters"
+            message: "missing parameters",
         });
         return;
     }
@@ -78,7 +78,7 @@ router.post("/parse", function(req, res) {
     const kResult = kirinuki(schema, req.body.html);
 
     if (kResult.books instanceof Array) {
-        kResult.books.forEach(undefinableBook => {
+        kResult.books.forEach((undefinableBook) => {
             const book: Book = Object.assign({}, blankBook, undefinableBook);
             if (book.link !== "") {
                 book.author = book.author.replace(/^著者:/, "");
@@ -92,7 +92,7 @@ router.post("/parse", function(req, res) {
         });
     } else {
         res.status(500).json({
-            message: "parse error"
+            message: "parse error",
         });
         return;
     }
