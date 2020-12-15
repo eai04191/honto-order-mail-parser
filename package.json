@@ -22,6 +22,6 @@
         "express-list-endpoints": "^5.0.0",
         "nodemon": "^2.0.6",
         "ts-node": "^9.1.1",
-        "typescript": "^4.1.2"
+        "typescript": "^4.1.3"
     }
 }
